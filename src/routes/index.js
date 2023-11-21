@@ -3,7 +3,8 @@ const upload = require("../services/uploader");
 
 const router = Router();
 
-router.post("/files", upload.single("avatar"), (req, res, next)=>{
+
+router.post("/files", upload.array("avatar"), (req, res, next)=>{
     try {
         console.log(req.file);      
         res.send('File Upload Successful')
