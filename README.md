@@ -22,3 +22,7 @@
 - [ ] Open Terminal
 - [ ] Run Command `yarn install` or `npm install`
 - [ ] Run Command `yarn dev`
+
+### Upload Way
+- Upload Single File `singleFile` Branch
+- Upload Multiple File `multipleFile` Branch
