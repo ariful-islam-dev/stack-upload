@@ -1,27 +1,29 @@
 const { Router } = require("express");
 const upload = require("../services/uploader");
+const {s3Uploader, getFileStream} = require("../services/s3Bucket")
 
 const router = Router();
 
-const fields = upload.fields([
-  { name: "avatar", maxCount: 1 },
-  {
-    name: "docs",
-    maxCount: 3,
-  },
-]);
-router.post("/files", fields, (req, res, next) => {
-  try {
-    console.log(req.files);
-    res.send("File Upload Successful");
-  } catch (error) {
-    next(error);
-  }
+// Upload Single File for le-node
+router.post("/files", upload.single("avatar"), async(req, res, next)=>{
+    try {
+       const data = await s3Uploader(req.file.buffer, req.file.originalname)
+        console.log(req.file)
+        res.json({data})
+    } catch (error) { 
+        next(error)
+    }
 });
 
-router.get("/files", (req, res) => {
-  res.json("file");
-});
+router.get("/files/:key", (req,res,next)=>{
+
+    try{
+      const data = getFileStream(req.params.key);
+      data.pipe(res)
+    }catch(error){ 
+      next(error)
+    }
+})
 router.get("/users", (req, res, next) => {
   res.status(200).json({
     name: "Ariful Islam",
@@ -31,6 +33,7 @@ router.get("/users", (req, res, next) => {
 
 router.post("/users", (req, res, next) => {
   const { name, age } = req.body;
+  res.send(name, age)
 });
 
 module.exports = router;

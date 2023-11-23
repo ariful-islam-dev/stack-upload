@@ -27,3 +27,8 @@
 - Upload Single File `singleFile` Branch
 - Upload Multiple File `multipleFile` Branch
 - Upload Multiple File From Multiple Fields `multipleField-multipleFile` Branch
+
+## 3rd Perty File Upload Service
+1. S3 to amazon
+2. Cloudinary (Free)
+3. Le-node
